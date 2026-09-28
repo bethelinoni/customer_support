@@ -20,10 +20,16 @@ $isAdminLoggedIn = isset($_SESSION['admin']);
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css?v=<?php echo file_exists(__DIR__ . '/style.css') ? filemtime(__DIR__ . '/style.css') : time(); ?>">
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+    <!-- Local & CDN Phosphor Icons (Resilient Fallback) -->
+    <link rel="stylesheet" href="css/phosphor.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Local & CDN Font Awesome (Resilient Fallback) -->
     <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <script>
         (function() {
             try {
@@ -317,7 +323,7 @@ $isAdminLoggedIn = isset($_SESSION['admin']);
                     <a href="<?php echo $isUserLoggedIn ? 'dashboard.php' : 'register.php'; ?>" class="step-card step-card-interactive" title="<?php echo $isUserLoggedIn ? 'Go to your portal dashboard' : 'Create your free BethelDesk account'; ?>">
                         <div class="step-header-row">
                             <div class="step-num-badge step-num-1">1</div>
-                            <i class="ph ph-user-plus step-icon-badge"></i>
+                            <i class="ph ph-user-plus step-icon-badge" style="color: #F59E0B;"></i>
                         </div>
                         <h4 class="step-title">Create an Account</h4>
                         <p class="step-desc">Register securely with your email and password. Your personal ticket portal is provisioned instantly.</p>
@@ -330,7 +336,7 @@ $isAdminLoggedIn = isset($_SESSION['admin']);
                     <a href="<?php echo $isUserLoggedIn ? 'submit_ticket.php' : 'login.php?return_to=submit_ticket.php'; ?>" class="step-card step-card-interactive" title="Submit a support ticket">
                         <div class="step-header-row">
                             <div class="step-num-badge step-num-2">2</div>
-                            <i class="ph ph-paper-plane-tilt step-icon-badge"></i>
+                            <i class="ph ph-paper-plane-tilt step-icon-badge" style="color: #F59E0B;"></i>
                         </div>
                         <h4 class="step-title">Submit Ticket</h4>
                         <p class="step-desc">Select category, set urgency, provide details, and attach error logs or screenshots with live preview.</p>
@@ -343,7 +349,7 @@ $isAdminLoggedIn = isset($_SESSION['admin']);
                     <div class="step-card">
                         <div class="step-header-row">
                             <div class="step-num-badge step-num-3">3</div>
-                            <i class="ph ph-headset step-icon-badge"></i>
+                            <i class="ph ph-headset step-icon-badge" style="color: #F59E0B;"></i>
                         </div>
                         <h4 class="step-title">Agent Collaborates</h4>
                         <p class="step-desc">Our dedicated support agents review, investigate, update ticket status, and provide detailed written answers.</p>

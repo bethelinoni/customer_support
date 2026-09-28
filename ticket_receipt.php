@@ -111,8 +111,16 @@ $autoPrint = isset($_GET['print']) && $_GET['print'] == '1';
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome -->
+    <!-- Local & CDN Phosphor Icons (Resilient Fallback) -->
+    <link rel="stylesheet" href="css/phosphor.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Local & CDN Font Awesome (Resilient Fallback) -->
     <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <script>
         (function() {
@@ -136,6 +144,9 @@ $autoPrint = isset($_GET['print']) && $_GET['print'] == '1';
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html, body, button, input, select {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
