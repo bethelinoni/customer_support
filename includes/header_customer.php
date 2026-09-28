@@ -1,0 +1,175 @@
+<?php
+/**
+ * BethelDesk - Customer Layout Header
+ * 
+ * Expected optional variables:
+ * - $pageTitle: string
+ * - $activeNav: string ('dashboard', 'submit', 'tickets', 'profile')
+ * - $navUnseenBadge: string|int (formatted unseen count)
+ * - $extraHead: string (additional styles/scripts)
+ */
+
+if (!defined('SITE_NAME')) {
+    require_once __DIR__ . '/../config.php';
+}
+
+$pageTitle = isset($pageTitle) && !empty($pageTitle) 
+    ? htmlspecialchars($pageTitle) . ' — ' . SITE_NAME 
+    : SITE_NAME . ' — Customer Support Portal';
+
+$activeNav = $activeNav ?? '';
+$navUnseenBadge = $navUnseenBadge ?? '';
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo $pageTitle; ?></title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=<?php echo file_exists(__DIR__ . '/../style.css') ? filemtime(__DIR__ . '/../style.css') : time(); ?>">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <script>
+        (function() {
+            try {
+                var savedTheme = localStorage.getItem('bethel_theme');
+                if (!savedTheme) {
+                    savedTheme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+                }
+                if (savedTheme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                }
+            } catch (e) {}
+        })();
+    </script>
+    <?php if (isset($extraHead)) echo $extraHead; ?>
+</head>
+<body class="logged-in-body">
+    <!-- Mobile Topbar (< 960px) -->
+    <div class="app-mobile-topbar">
+        <div class="mobile-brand">
+            <?php echo renderBethelDeskLogo('sm', 'Portal', 'dashboard.php'); ?>
+        </div>
+        <div class="mobile-actions">
+            <button type="button" class="mobile-btn theme-toggle-btn" aria-label="Toggle theme" title="Switch theme">
+                <i class="ph ph-moon theme-moon-icon"></i>
+                <i class="ph ph-sun theme-sun-icon"></i>
+            </button>
+            <button type="button" id="mobileMenuToggleBtn" class="mobile-btn" aria-label="Toggle navigation menu" title="Menu">
+                <i class="ph ph-list"></i>
+            </button>
+        </div>
+    </div>
+    <div class="app-sidebar-backdrop" id="appSidebarBackdrop"></div>
+
+    <div class="app-layout">
+        <!-- Dual-Card Sidebar Assembly (No Topbar, Zero Radius, Shadow Elevated) -->
+        <aside class="app-sidebar-assembly" id="appSidebarAssembly">
+            <!-- Card 1: Icons Only -->
+            <div class="sidebar-icons-card" aria-label="Quick Icon Actions">
+                <a href="dashboard.php" class="sidebar-icon-brand" title="BethelDesk Customer Portal">
+                    <i class="ph-bold ph-shield-check"></i>
+                </a>
+                <div class="sidebar-icon-stack">
+                    <a href="index.php" class="sidebar-icon-btn" title="Home (Landing Page)">
+                        <i class="ph ph-house"></i>
+                    </a>
+                    <a href="dashboard.php" class="sidebar-icon-btn <?php echo ($activeNav === 'dashboard') ? 'active' : ''; ?>" title="Dashboard">
+                        <i class="ph ph-squares-four"></i>
+                    </a>
+                    <a href="submit_ticket.php" class="sidebar-icon-btn <?php echo ($activeNav === 'submit') ? 'active' : ''; ?>" title="Submit Ticket">
+                        <i class="ph ph-plus-circle"></i>
+                    </a>
+                    <a href="view_tickets.php" class="sidebar-icon-btn <?php echo ($activeNav === 'tickets') ? 'active' : ''; ?>" title="My Tickets">
+                        <i class="ph ph-ticket"></i>
+                    </a>
+                    <a href="profile.php" class="sidebar-icon-btn <?php echo ($activeNav === 'profile') ? 'active' : ''; ?>" title="Profile">
+                        <i class="ph ph-user-gear"></i>
+                    </a>
+                </div>
+                <div class="sidebar-icon-footer">
+                    <button type="button" class="sidebar-icon-btn theme-toggle-btn" aria-label="Toggle theme" title="Switch between dark and light mode">
+                        <i class="ph ph-moon theme-moon-icon"></i>
+                        <i class="ph ph-sun theme-sun-icon"></i>
+                    </button>
+                    <a href="logout.php" class="sidebar-icon-btn sidebar-nav-logout" title="Sign Out">
+                        <i class="ph ph-sign-out"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 2: Companion Navigation Card (Icons & Labels) -->
+            <div class="sidebar-nav-card" aria-label="Primary Navigation">
+                <div>
+                    <div class="sidebar-nav-header">
+                        <?php echo renderBethelDeskLogo('sm', 'Portal', 'dashboard.php'); ?>
+                    </div>
+
+                    <nav class="sidebar-nav-list">
+                        <a href="index.php" class="sidebar-nav-link" title="Return to Landing Page">
+                            <i class="ph ph-house"></i>
+                            <span>Home</span>
+                        </a>
+
+                        <a href="dashboard.php" class="sidebar-nav-link <?php echo ($activeNav === 'dashboard') ? 'active' : ''; ?>">
+                            <i class="ph ph-squares-four"></i>
+                            <span>Dashboard</span>
+                        </a>
+
+                        <a href="submit_ticket.php" class="sidebar-nav-link <?php echo ($activeNav === 'submit') ? 'active' : ''; ?>">
+                            <i class="ph ph-plus-circle"></i>
+                            <span>Submit Ticket</span>
+                        </a>
+
+                        <a href="view_tickets.php" class="sidebar-nav-link <?php echo ($activeNav === 'tickets') ? 'active' : ''; ?>">
+                            <i class="ph ph-ticket"></i>
+                            <span>My Tickets</span>
+                            <?php if (!empty($navUnseenBadge)): ?>
+                                <span class="nav-badge"><?php echo $navUnseenBadge; ?></span>
+                            <?php endif; ?>
+                        </a>
+
+                        <a href="profile.php" class="sidebar-nav-link <?php echo ($activeNav === 'profile') ? 'active' : ''; ?>">
+                            <i class="ph ph-user-gear"></i>
+                            <span>Profile</span>
+                        </a>
+                    </nav>
+                </div>
+
+                <div class="sidebar-nav-footer">
+                    <?php
+                    $userName = $_SESSION['fullname'] ?? $_SESSION['username'] ?? 'Customer';
+                    $userInitial = strtoupper(substr($userName, 0, 1));
+                    ?>
+                    <div class="sidebar-user-chip">
+                        <div class="sidebar-user-avatar"><?php echo htmlspecialchars($userInitial); ?></div>
+                        <div class="sidebar-user-meta">
+                            <span class="sidebar-user-name" title="<?php echo htmlspecialchars($userName); ?>"><?php echo htmlspecialchars($userName); ?></span>
+                            <span class="sidebar-user-role">Customer Account</span>
+                        </div>
+                    </div>
+
+                    <button type="button" class="sidebar-nav-btn theme-toggle-btn" aria-label="Toggle theme">
+                        <i class="ph ph-moon theme-moon-icon"></i>
+                        <i class="ph ph-sun theme-sun-icon"></i>
+                        <span>Toggle Theme</span>
+                    </button>
+
+                    <a href="logout.php" class="sidebar-nav-btn sidebar-nav-logout">
+                        <i class="ph ph-sign-out"></i>
+                        <span>Sign Out</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="app-main-content">
