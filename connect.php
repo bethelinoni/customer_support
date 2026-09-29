@@ -1,8 +1,24 @@
 <?php
+
 require_once __DIR__ . '/config.php';
 date_default_timezone_set('Africa/Lagos');
 
-$conn = new mysqli("localhost", "root", "", "customer_support");
+require_once __DIR__ . '/db_config.php';
+
+$conn = new mysqli(
+    $db_host,
+    $db_username,
+    $db_password,
+    $db_name,
+    $db_port
+);
+
+if ($conn->connect_error) {
+    die("Database connection failed: " . $conn->connect_error);
+}
+
+
+/* YOUR EXISTING DATABASE SETUP/MIGRATION CODE CONTINUES HERE */
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
